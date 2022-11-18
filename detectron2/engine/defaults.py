@@ -314,9 +314,10 @@ class DefaultPredictor:
             image = torch.as_tensor(image.astype("float32").transpose(2, 0, 1))
 
             inputs = {"image": image, "height": height, "width": width}
-            predictions = self.model([inputs])[0]
+            predictions_ = self.model([inputs])
+            predictions = predictions_[0]
             if newoutput:
-                return predictions, height
+                return predictions, inputs,predictions_
             else:
                 return predictions
 
