@@ -294,7 +294,7 @@ class DefaultPredictor:
         self.input_format = cfg.INPUT.FORMAT
         assert self.input_format in ["RGB", "BGR"], self.input_format
 
-    def __call__(self, original_image):
+    def __call__(self, original_image,newoutput=False):
         """
         Args:
             original_image (np.ndarray): an image of shape (H, W, C) (in BGR order).
@@ -315,7 +315,10 @@ class DefaultPredictor:
 
             inputs = {"image": image, "height": height, "width": width}
             predictions = self.model([inputs])[0]
-            return predictions
+            if newoutput:
+                return predictions, height
+            else:
+                return predictions
 
 
 class DefaultTrainer(TrainerBase):
